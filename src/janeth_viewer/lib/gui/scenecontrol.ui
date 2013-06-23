@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SceneControl</class>
+ <widget class="QWidget" name="SceneControl">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>434</width>
+    <height>557</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="cameraLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="cameraPositionTextLabel">
+       <property name="text">
+        <string>Camera:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QDoubleSpinBox" name="cameraXSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QDoubleSpinBox" name="cameraYSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QDoubleSpinBox" name="cameraZSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="cameraViewpointTextLabel">
+       <property name="text">
+        <string>Viewpoint:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDoubleSpinBox" name="cameraViewXSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QDoubleSpinBox" name="cameraViewYSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QDoubleSpinBox" name="cameraViewZSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="cameraModeTextLabel">
+       <property name="text">
+        <string>Projection:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="cameraModeComboBox">
+       <item>
+        <property name="text">
+         <string>Orthogonal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Perspective</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QDoubleSpinBox" name="cameraNearSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
+       <property name="maximum">
+        <double>10.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QDoubleSpinBox" name="cameraFarSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="decimals">
+        <number>2</number>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_7">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="sceneLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="sceneTranslationTextLabel">
+       <property name="text">
+        <string>Translation:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDoubleSpinBox" name="sceneXSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QDoubleSpinBox" name="sceneYSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QDoubleSpinBox" name="sceneZSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-1000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="sceneRotationTextLabel">
+       <property name="text">
+        <string>Rotation:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="sceneScaleTextLabel">
+       <property name="text">
+        <string>Scale:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="sceneYawSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-180.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>179.990000000000009</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QDoubleSpinBox" name="scenePitchSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-180.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>179.990000000000009</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QDoubleSpinBox" name="sceneRollSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-180.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>179.990000000000009</double>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QDoubleSpinBox" name="sceneScaleSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
+       <property name="minimum">
+        <double>0.000100000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="groundLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="groundTextLabel">
+       <property name="text">
+        <string>Ground:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QDoubleSpinBox" name="groundXSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+       <property name="value">
+        <double>30.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QDoubleSpinBox" name="groundYSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+       <property name="value">
+        <double>30.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QDoubleSpinBox" name="groundZSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-100.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>100.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_8">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="ColorChooser" name="colorChooser" native="true"/>
+   </item>
+   <item>
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="showLayout">
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="showAxesCheckBox">
+       <property name="text">
+        <string>Show coordinate axes</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QCheckBox" name="showFogCheckBox">
+       <property name="text">
+        <string>Show background fog</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QCheckBox" name="showGroundCheckBox">
+       <property name="text">
+        <string>Show ground plane</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="kinematicsLayout">
+     <item row="1" column="0">
+      <widget class="QCheckBox" name="rotateFramesCheckBox">
+       <property name="text">
+        <string>Rotate between frames</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDoubleSpinBox" name="frameRotationSpinBox">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="minimum">
+        <double>-180.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>179.990000000000009</double>
+       </property>
+       <property name="singleStep">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QCheckBox" name="cameraFollowCheckBox">
+       <property name="text">
+        <string>Camera follow</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorChooser</class>
+   <extends>QWidget</extends>
+   <header>colorchooser.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>showAxesCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>showAxesToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sceneXSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>sceneTranslationChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sceneYSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>sceneTranslationChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sceneZSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>sceneTranslationChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>347</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sceneYawSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>sceneRotationChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scenePitchSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>sceneRotationChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sceneRollSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>sceneRotationChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>347</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sceneScaleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>sceneScaleChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>112</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showFogCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>showFogToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>177</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>groundXSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>groundRadiusChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showGroundCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>showGroundToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>groundYSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>groundRadiusChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>groundZSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>groundElevationChanged(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>347</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraXSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraPositionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraYSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraPositionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraZSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraPositionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraViewXSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraViewpointChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraViewYSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraViewpointChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraViewZSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraViewpointChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraModeComboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraModeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraNearSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraRangeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>270</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cameraFarSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>SceneControl</receiver>
+   <slot>cameraRangeChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>377</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>showAxesToggled(bool)</slot>
+  <slot>sceneTranslationChanged()</slot>
+  <slot>sceneRotationChanged()</slot>
+  <slot>sceneScaleChanged()</slot>
+  <slot>showFogToggled(bool)</slot>
+  <slot>groundRadiusChanged(double)</slot>
+  <slot>showGroundToggled(bool)</slot>
+  <slot>groundElevationChanged(double)</slot>
+  <slot>cameraPositionChanged()</slot>
+  <slot>cameraViewpointChanged()</slot>
+  <slot>cameraModeChanged(int)</slot>
+  <slot>cameraRangeChanged()</slot>
+ </slots>
+</ui>

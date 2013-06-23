@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BagControl</class>
+ <widget class="QWidget" name="BagControl">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>492</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="browseLayout">
+     <item>
+      <widget class="QLabel" name="logTextLabel">
+       <property name="text">
+        <string>Log file:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="logEdit">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="logBrowseButton">
+       <property name="text">
+        <string>Open...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="controlLayout">
+     <item row="1" column="4">
+      <widget class="QSlider" name="logSlider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QToolButton" name="logPlayButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../../../../../../../../../usr/share/icons/oxygen/32x32/actions/media-playback-start.png</normaloff>../../../../../../../../../../usr/share/icons/oxygen/32x32/actions/media-playback-start.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QToolButton" name="logStopButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../../../../../../../../../usr/share/icons/oxygen/32x32/actions/media-playback-stop.png</normaloff>../../../../../../../../../../usr/share/icons/oxygen/32x32/actions/media-playback-stop.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QToolButton" name="logForwardButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../../../../../../../../../../usr/share/icons/oxygen/32x32/actions/media-seek-forward.png</normaloff>../../../../../../../../../../usr/share/icons/oxygen/32x32/actions/media-seek-forward.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="logInfoLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="msgLabel">
+       <property name="text">
+        <string>Messages:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="msgSpinBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+       <property name="maximum">
+        <number>1000000000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="startTimeLabel">
+       <property name="text">
+        <string>Starting time:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="startTimeEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="endTimeLabel">
+       <property name="text">
+        <string>Ending time:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="endTimeEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="currTimeLabel">
+       <property name="text">
+        <string>Current time:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="currTimeEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+  <action name="testAction">
+   <property name="text">
+    <string>Test</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>logBrowseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>BagControl</receiver>
+   <slot>logBrowseClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>347</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>logPlayButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BagControl</receiver>
+   <slot>logPlayToggled()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>66</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>logStopButton</sender>
+   <signal>clicked()</signal>
+   <receiver>BagControl</receiver>
+   <slot>logStopClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>logForwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>BagControl</receiver>
+   <slot>logForwardClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>logBrowseClicked()</slot>
+  <slot>logPlayToggled()</slot>
+  <slot>logPauseClicked()</slot>
+  <slot>logStopClicked()</slot>
+  <slot>logBackwardClicked()</slot>
+  <slot>logForwardClicked()</slot>
+ </slots>
+</ui>
