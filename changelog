@@ -1,3 +1,9 @@
+janeth-ros-viewer (0.1-5) lucid; urgency=low
+
+  * dep on eigen3 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Mon, 01 Jul 2013 12:16:08 +0200
+
 janeth-ros-viewer (0.1-4) lucid; urgency=low
 
   * removing dependency on can-prius 
