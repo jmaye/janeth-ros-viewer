@@ -21,6 +21,8 @@
 #ifndef GLDISPLAY_H
 #define GLDISPLAY_H
 
+#include <GL/glu.h>
+
 #include <QtOpenGL/QGLWidget>
 
 #include "gui/view.h"

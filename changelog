@@ -1,3 +1,9 @@
+janeth-ros-viewer (0.1-7) precise; urgency=low
+
+  * correction for precise 
+
+ -- Jerome Maye <jmaye@jmaye-laptop>  Mon, 01 Jul 2013 11:18:14 +0000
+
 janeth-ros-viewer (0.1-6) lucid; urgency=low
 
   * adding dev dep 
