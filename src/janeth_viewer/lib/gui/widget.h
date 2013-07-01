@@ -33,7 +33,7 @@ Q_OBJECT
 friend class MainWindow;
 public:
   Widget(QWidget* parent = 0);
-  ~Widget();
+  virtual ~Widget();
 
   void connect(const QString& className, const QString& signal, const
     QString& method, Qt::ConnectionType type = Qt::AutoConnection);

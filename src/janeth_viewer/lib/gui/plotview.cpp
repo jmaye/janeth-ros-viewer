@@ -164,12 +164,6 @@ void PlotView::enableFog(const QColor& color, double start, double end,
 
 void PlotView::render(const Points<double, 3>& vertices, const QColor& color,
     double size, bool smooth) {
-  saveTransformation();
-
-  translate(vertices.getOrigin());
-  rotate(vertices.getOrientation());
-  scale(vertices.getSize());
-
   std::vector<Points<double, 3> >& points = this->points[color.name()];
 
   points.push_back(Points<double, 3>(0));
@@ -181,19 +175,11 @@ void PlotView::render(const Points<double, 3>& vertices, const QColor& color,
 
   if (!points.back().getNumPoints())
     points.pop_back();
-
-  restoreTransformation();
 }
 
 void PlotView::render(const Points<double, 3>& vertices, const
     std::vector<double>& weights, const QColor& fromColor, const QColor&
     toColor, double fromSize, double toSize, bool smooth) {
-  saveTransformation();
-
-  translate(vertices.getOrigin());
-  rotate(vertices.getOrientation());
-  scale(vertices.getSize());
-
   QString palette = "0 '"+fromColor.name()+"', 1 '"+toColor.name()+"'";
   std::vector<Points<double, 3> >& points = palettePoints[palette];
   std::vector<std::vector<double> >& pointWeights =
@@ -213,17 +199,9 @@ void PlotView::render(const Points<double, 3>& vertices, const
     points.pop_back();
     pointWeights.pop_back();
   }
-
-  restoreTransformation();
 }
 
 void PlotView::render(const Line<double, 3>& edges, const QColor& color) {
-  saveTransformation();
-
-  translate(edges.getOrigin());
-  rotate(edges.getOrientation());
-  scale(edges.getSize());
-
   std::vector<Line<double, 3> >& lines = this->lines[color.name()];
 
   lines.push_back(Line<double, 3>(0));
@@ -245,18 +223,10 @@ void PlotView::render(const Line<double, 3>& edges, const QColor& color) {
 
   if (lines.back().getNumPoints() < 2)
     lines.pop_back();
-
-  restoreTransformation();
 }
 
 void PlotView::render(const Line<double, 3>& edges, double weight, const
     QColor& fromColor, const QColor& toColor) {
-  saveTransformation();
-
-  translate(edges.getOrigin());
-  rotate(edges.getOrientation());
-  scale(edges.getSize());
-
   QString palette = "0 '"+fromColor.name()+"', 1 '"+toColor.name()+"'";
   std::vector<Line<double, 3> >& lines = paletteLines[palette];
   std::vector<double>& lineWeights = paletteLineWeights[palette];
@@ -283,8 +253,6 @@ void PlotView::render(const Line<double, 3>& edges, double weight, const
     lines.pop_back();
     lineWeights.pop_back();
   }
-
-  restoreTransformation();
 }
 
 void PlotView::render(const QString& text, const QColor& color) {
@@ -682,3 +650,7 @@ void PlotView::exportClicked() {
     exportFrame(filename);
 }
 
+void PlotView::render(const QImage& image, const QRectF& target,
+    const Transformation& transformation, const std::string& serial,
+    size_t imageId) {
+}

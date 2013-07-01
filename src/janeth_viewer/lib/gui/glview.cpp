@@ -61,7 +61,7 @@ GLView::GLView() :
 
   setDumpDirectory(QDir::current().path());
   setDumpFrameSize(1280, 720);
-  setDumpFormat("dump%06d.png");
+  setDumpFormat("dump3d%06d.png");
   setDumpAll(false);
 }
 
@@ -214,12 +214,6 @@ void GLView::enableFog(const QColor& color, double start, double end,
 
 void GLView::render(const Points<double, 3>& vertices, const QColor& color,
     double size, bool smooth) {
-  saveTransformation();
-
-  translate(vertices.getOrigin());
-  rotate(vertices.getOrientation());
-  scale(vertices.getSize());
-
   if (size > 1.0)
     glPointSize(size);
   else
@@ -237,19 +231,11 @@ void GLView::render(const Points<double, 3>& vertices, const QColor& color,
 
   glDisable(GL_POINT_SMOOTH);
   glPointSize(1.0);
-
-  restoreTransformation();
 }
 
 void GLView::render(const Points<double, 3>& vertices, const
     std::vector<double>& weights, const QColor& fromColor, const QColor&
     toColor, double fromSize, double toSize, bool smooth){
-  saveTransformation();
-
-  translate(vertices.getOrigin());
-  rotate(vertices.getOrientation());
-  scale(vertices.getSize());
-
   if (smooth)
     glEnable(GL_POINT_SMOOTH);
   else
@@ -273,35 +259,19 @@ void GLView::render(const Points<double, 3>& vertices, const
 
   glDisable(GL_POINT_SMOOTH);
   glPointSize(1.0);
-
-  restoreTransformation();
 }
 
 void GLView::render(const Line<double, 3>& edges, const QColor& color) {
-  saveTransformation();
-
-  translate(edges.getOrigin());
-  rotate(edges.getOrientation());
-  scale(edges.getSize());
-
   glColor4f(color.redF(), color.greenF(), color.blueF(), color.alphaF());
 
   glBegin(GL_LINE_STRIP);
   for (int i = 0; i < edges.getNumPoints(); ++i)
     glVertex3f(edges[i][0], edges[i][1], edges[i][2]);
   glEnd();
-
-  restoreTransformation();
 }
 
 void GLView::render(const Line<double, 3>& edges, double weight, const QColor&
     fromColor, const QColor& toColor) {
-  saveTransformation();
-
-  translate(edges.getOrigin());
-  rotate(edges.getOrientation());
-  scale(edges.getSize());
-
   glColor4f((1.0-weight)*fromColor.redF()+weight*toColor.redF(),
     (1.0-weight)*fromColor.greenF()+weight*toColor.greenF(),
     (1.0-weight)*fromColor.blueF()+weight*toColor.blueF(),
@@ -311,8 +281,6 @@ void GLView::render(const Line<double, 3>& edges, double weight, const QColor&
   for (int i = 0; i < edges.getNumPoints(); ++i)
     glVertex3f(edges[i][0], edges[i][1], edges[i][2]);
   glEnd();
-
-  restoreTransformation();
 }
 
 void GLView::render(const QString& text, const QColor& color) {
@@ -329,6 +297,12 @@ void GLView::render(const QString& text, const QColor& color) {
 
   if (font)
     font->Render(text.toAscii().constData());
+
+  // memory leak in FTGL
+  if (font) {
+    delete font;
+    font = 0;
+  }
 }
 
 void GLView::render(const Ellipsoid<double, 3>& ellipsoid, size_t numSegments,
@@ -449,4 +423,25 @@ void GLView::dumpClicked() {
 
 void GLView::dumpAllToggled(bool checked) {
   setDumpAll(checked);
+}
+
+void GLView::render(const QImage& image, const QRectF& target,
+    const Transformation& transformation, const std::string& serial,
+    size_t imageId) {
+//  saveTransformation();
+//  translate(transformation.translation());
+//  Eigen::Vector3d angles = transformation.rotation().eulerAngles(2, 1, 0);
+//  rotate(angles);
+//  static GLuint textureID = -1;
+//  static int prevImageId = -1;
+//  if (imageId != prevImageId) {
+//    if (textureID > 0)
+//      getDisplay().deleteTexture(textureID);
+//    textureID = getDisplay().bindTexture(image, GL_TEXTURE_2D, GL_LUMINANCE);
+//  }
+//  QColor color = Qt::lightGray;
+//  glColor4f(color.redF(), color.greenF(), color.blueF(), color.alphaF());
+//  getDisplay().drawTexture(target, textureID);
+//  prevImageId = imageId;
+//  restoreTransformation();
 }

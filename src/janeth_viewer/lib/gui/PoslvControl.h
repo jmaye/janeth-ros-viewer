@@ -23,8 +23,11 @@
 #ifndef POSLVCONTROL_H
 #define POSLVCONTROL_H
 
+#include <eigen3/Eigen/Geometry>
 
 #include <rosbag/message_instance.h>
+
+#include <poslv/VehicleNavigationSolutionMsg.h>
 
 #include "gui/palette.h"
 #include "gui/view.h"
@@ -56,7 +59,7 @@ public:
     */
   /// Constructs the control
   PoslvControl(bool showPath = true, bool showAxes = true,
-    bool showVelocity = true);
+    bool showVelocity = true, bool showAcceleration = true);
   /// Destructor
   ~PoslvControl();
   /** @}
@@ -77,6 +80,12 @@ public:
   void setShowVelocity(bool showVelocity);
   /// Sets the velocity color
   void setVelocityColor(const QColor& color);
+  /// Shows the acceleration
+  void setShowAcceleration(bool showAcceleration);
+  /// Sets the acceleration color
+  void setAccelerationColor(const QColor& color);
+  /// Sets the rendering rate
+  void setRenderingRate(size_t rate);
   /** @}
     */
 
@@ -90,6 +99,8 @@ protected:
   void renderAxes(View& view, const QColor& color, double length);
   /// Render the current velocity
   void renderVelocity(View& view, const QColor& color);
+  /// Render the current acceleration
+  void renderAcceleration(View& view, const QColor& color);
   /** @}
     */
 
@@ -101,13 +112,15 @@ protected:
   /// Color palette
   Palette _palette;
   /// Path
-  std::vector<Points<double, 3>::Point> _path;
-  /// Orientation
-  Eigen::Matrix<double, 3, 1> _orientation;
+  Line<double, 3> _path;
   /// Linear velocity
   Eigen::Vector3d _linearVelocity;
   /// Angular velocity
   Eigen::Vector3d _angularVelocity;
+  /// Acceleration
+  Eigen::Vector3d _acceleration;
+  /// Transformation from IMU to world
+  Eigen::Affine3d _T_w_i;
   /** @}
     */
 
@@ -123,10 +136,14 @@ protected slots:
   void showAxesToggled(bool checked);
   /// Show velocity toggled
   void showVelocityToggled(bool checked);
+  /// Show acceleration toggled
+  void showAccelerationToggled(bool checked);
   /// Render the current view
   void renderView(View& view);
   /// New message read from the bag file
   void messageRead(const rosbag::MessageInstance& message);
+  /// POS LV message received
+  void messageRead(const poslv::VehicleNavigationSolutionMsgConstPtr& msg);
   /// Clear path clicked
   void clearClicked();
   /** @}
@@ -137,8 +154,7 @@ signals:
     @{
     */
   /// Pose update
-  void poseUpdate(double x, double y, double z, double yaw, double pitch,
-    double roll);
+  void poseUpdate(const Eigen::Affine3d& T_w_i);
   /** @}
     */
 

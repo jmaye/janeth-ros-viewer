@@ -26,13 +26,11 @@
 
 template <typename T, size_t K>
 Points<T, K>::Points(size_t numPoints) :
-/*  Geometry<T, K>(),*/
   points(numPoints) {
 }
 
 template <typename T, size_t K>
 Points<T, K>::Points(const Points<T, K>& src) :
-  Geometry<T, K>(src),
   points(src.points) {
 }
 
@@ -87,7 +85,6 @@ const typename Points<T, K>::Point& Points<T, K>::operator[](int i) const {
 
 template <typename T, size_t K>
 Points<T, K>& Points<T, K>::operator=(const Points<T, K>& src) {
-  Geometry<T, K>::operator=(src);
   points = src.points;
   return *this;
 }
@@ -96,4 +93,9 @@ template <typename T, size_t K>
 Points<T, K>& Points<T, K>::operator+=(const Point& point) {
   points.push_back(point);
   return *this;
+}
+
+template <typename T, size_t K>
+void Points<T, K>::clear() {
+  points.clear();
 }

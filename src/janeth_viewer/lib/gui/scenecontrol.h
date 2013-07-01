@@ -36,7 +36,7 @@ class SceneControl :
   public Control {
 Q_OBJECT
 public:
-  SceneControl(bool showFog = true, bool showGround = true, bool
+  SceneControl(bool showFog = true, bool showGround = false, bool
     showAxes = true);
   ~SceneControl();
 
@@ -104,8 +104,7 @@ protected slots:
   void prepareView(View& view);
   void renderView(View& view);
 
-  void poseUpdate(double x, double y, double z, double yaw, double pitch,
-    double roll);
+  void poseUpdate(const Eigen::Affine3d& T_w_i);
 };
 
 #endif

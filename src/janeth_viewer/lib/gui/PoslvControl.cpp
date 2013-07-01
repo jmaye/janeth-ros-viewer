@@ -18,14 +18,11 @@
 
 #include "gui/PoslvControl.h"
 
-#include <eigen3/Eigen/Geometry>
-
 #include <libposlv/sensor/Utils.h>
 #include <libposlv/geo-tools/Geo.h>
 
-#include <poslv/VehicleNavigationSolutionMsg.h>
-
 #include "gui/BagControl.h"
+#include "gui/RosControl.h"
 
 #include "ui_PoslvControl.h"
 
@@ -33,15 +30,24 @@
 /* Constructors and Destructor                                                */
 /******************************************************************************/
 
-PoslvControl::PoslvControl(bool showPath, bool showAxes, bool showVelocity) :
+PoslvControl::PoslvControl(bool showPath, bool showAxes, bool showVelocity,
+    bool showAcceleration) :
     _ui(new Ui_PoslvControl()),
-    _orientation(0.0, 0.0, 0.0),
-    _linearVelocity(0.0, 0.0, 0.0),
-    _angularVelocity(0.0, 0.0, 0.0) {
+    _path(0),
+    _linearVelocity(Eigen::Vector3d::Zero()),
+    _angularVelocity(Eigen::Vector3d::Zero()),
+    _acceleration(Eigen::Vector3d::Zero()),
+    _T_w_i(Eigen::AngleAxisd(0, Eigen::Vector3d::UnitZ())
+      * Eigen::AngleAxisd(0, Eigen::Vector3d::UnitY())
+      * Eigen::AngleAxisd(0, Eigen::Vector3d::UnitX())
+      * Eigen::Translation3d(0, 0, 0)) {
   _ui->setupUi(this);
   _ui->colorChooser->setPalette(&_palette);
   connect<BagControl>(SIGNAL(messageRead(const rosbag::MessageInstance&)),
     SLOT(messageRead(const rosbag::MessageInstance&)));
+  connect<RosControl>(
+    SIGNAL(messageRead(const poslv::VehicleNavigationSolutionMsgConstPtr&)),
+    SLOT(messageRead(const poslv::VehicleNavigationSolutionMsgConstPtr&)));
   connect<View>(SIGNAL(render(View&)), SLOT(renderView(View&)));
   setPathColor(Qt::red);
   setShowPath(showPath);
@@ -49,6 +55,8 @@ PoslvControl::PoslvControl(bool showPath, bool showAxes, bool showVelocity) :
   setShowAxes(showAxes);
   setShowVelocity(showVelocity);
   setVelocityColor(Qt::cyan);
+  setShowAcceleration(showAcceleration);
+  setAccelerationColor(Qt::cyan);
 }
 
 PoslvControl::~PoslvControl() {
@@ -86,78 +94,72 @@ void PoslvControl::setShowVelocity(bool showVelocity) {
   emit updateViews();
 }
 
+void PoslvControl::setAccelerationColor(const QColor& color) {
+  _palette.setColor("Acceleration", color);
+}
+
+void PoslvControl::setShowAcceleration(bool showAcceleration) {
+  _ui->showAccelerationCheckBox->setChecked(showAcceleration);
+  emit updateViews();
+}
+
+void PoslvControl::setRenderingRate(size_t rate) {
+  _ui->rateSpinBox->setValue(rate);
+}
+
 /******************************************************************************/
 /* Methods                                                                    */
 /******************************************************************************/
 
 void PoslvControl::renderPath(View& view, const QColor& color) {
-  Line<double, 3> line(_path.size());
-  for (size_t i = 0; i < _path.size(); ++i)
-    line[i] = _path[i];
-  view.render(line, color);
+  view.render(_path, color);
 }
 
 void PoslvControl::renderAxes(View& view, const QColor& color, double length) {
   Line<double, 3> l_1, l_2, l_3;
-
-  Points<double, 3>::Point origin = Points<double, 3>::Point::Zero();
-
-  Eigen::Matrix3d C_w_NED_i_NED;
-  C_w_NED_i_NED = Eigen::AngleAxisd(_orientation(0), Eigen::Vector3d::UnitZ())
-   * Eigen::AngleAxisd(_orientation(1), Eigen::Vector3d::UnitY())
-   * Eigen::AngleAxisd(_orientation(2), Eigen::Vector3d::UnitX());
-  Eigen::Matrix3d C_ENU_NED =
-    Geo::R_ENU_NED::getInstance().getMatrix();
-  const Eigen::Matrix3d C_w_ENU_i_ENU = C_w_NED_i_NED * C_ENU_NED;
-
-  if (!_path.empty())
-    origin = _path.back();
-
-  const Eigen::Matrix<double, 3, 1> xLabelOrigin = origin +
-    C_w_ENU_i_ENU * Eigen::Matrix<double, 3, 1>(length, 0, 0);
-  const Eigen::Matrix<double, 3, 1> yLabelOrigin = origin +
-    C_w_ENU_i_ENU * Eigen::Matrix<double, 3, 1>(0, length, 0);
-  const Eigen::Matrix<double, 3, 1> zLabelOrigin = origin +
-    C_w_ENU_i_ENU * Eigen::Matrix<double, 3, 1>(0, 0, length);
-  view.render("X", xLabelOrigin(0), xLabelOrigin(1), xLabelOrigin(2), color,
-    0.2*length);
-  view.render("Y", yLabelOrigin(0), yLabelOrigin(1), yLabelOrigin(2), color,
-    0.2*length);
-  view.render("Z", zLabelOrigin(0), zLabelOrigin(1), zLabelOrigin(2), color,
-    0.2*length);
-
-  l_1[0] = origin;
-  l_1[1] = xLabelOrigin;
-  view.render(l_1, color);
-  l_2[0] = origin;
-  l_2[1] = yLabelOrigin;
-  view.render(l_2, color);
-  l_3[0] = origin;
-  l_3[1] = zLabelOrigin;
-  view.render(l_3, color);
-
-  Eigen::Matrix<double, 3, 1> labelOrigin = origin +
-    C_w_ENU_i_ENU * Eigen::Matrix<double, 3, 1>(0, 0, length + 0.5);
-  view.render("poslv", labelOrigin(0), labelOrigin(1), labelOrigin(2), color,
-    0.2 * length);
+  l_1[1][0] = length;
+  view.render(l_1, color, _T_w_i);
+  l_2[1][1] = length;
+  view.render(l_2, color, _T_w_i);
+  l_3[1][2] = length;
+  view.render(l_3, color, _T_w_i);
+  Eigen::Vector3d xLabelPosition = _T_w_i * l_1[1];
+  Eigen::Vector3d yLabelPosition = _T_w_i * l_2[1];
+  Eigen::Vector3d zLabelPosition = _T_w_i * l_3[1];
+  view.render("X", xLabelPosition, color, 0.2*length);
+  view.render("Y", yLabelPosition, color, 0.2*length);
+  view.render("Z", zLabelPosition, color, 0.2*length);
+  Eigen::Vector3d labelPosition = _T_w_i * Eigen::Vector3d(0, 0, length + 0.1);
+  view.render("poslv", labelPosition, color, 0.2 * length);
 }
 
 void PoslvControl::renderVelocity(View& view, const QColor& color) {
-  Line<double, 3> linearVelocity;
-  Line<double, 3> angularVelocity;
-  Points<double, 3>::Point origin = Points<double, 3>::Point::Zero();
-  if (!_path.empty())
-    origin = _path.back();
-  linearVelocity.setOrigin(origin);
-  angularVelocity.setOrigin(origin);
-  Eigen::Matrix3d C_ENU_NED =
-    Geo::R_ENU_NED::getInstance().getMatrix();
-  linearVelocity[1] = C_ENU_NED * _linearVelocity;
-  view.render(linearVelocity, color);
-  view.render("v", origin + linearVelocity[1], color, 0.2 * 2.5);
-  angularVelocity[1] = C_ENU_NED * _angularVelocity;
-  view.render(angularVelocity, color);
-  view.render("om", origin + angularVelocity[1], color, 0.2 * 2.5);
+  if (_path.getNumPoints()) {
+    Line<double, 3> linearVelocity;
+    Line<double, 3> angularVelocity;
+    const Eigen::Matrix3d C_ENU_NED =
+      Geo::R_ENU_NED::getInstance().getMatrix();
+    Eigen::Affine3d translation;
+    translation = Eigen::Translation3d(_T_w_i.translation());
+    linearVelocity[1] = C_ENU_NED * _linearVelocity;
+    view.render(linearVelocity, color, translation);
+    Eigen::Vector3d labelPosition = translation * linearVelocity[1];
+    view.render("v", labelPosition, color, 0.05 * 2.5);
+    angularVelocity[1] = C_ENU_NED * _angularVelocity;
+    view.render(angularVelocity, color, _T_w_i);
+    view.render("om", _T_w_i * angularVelocity[1], color, 0.2 * 0.5);
+  }
+}
+
+void PoslvControl::renderAcceleration(View& view, const QColor& color) {
+  if (_path.getNumPoints()) {
+    Line<double, 3> acceleration;
+    const Eigen::Matrix3d C_ENU_NED =
+      Geo::R_ENU_NED::getInstance().getMatrix();
+    acceleration[1] = C_ENU_NED * _acceleration;
+    view.render(acceleration, color, _T_w_i);
+    view.render("a", _T_w_i * acceleration[1], color, 0.2 * 0.5);
+  }
 }
 
 void PoslvControl::colorChanged(const QString& role, const QColor& color) {
@@ -176,58 +178,78 @@ void PoslvControl::showVelocityToggled(bool checked) {
   setShowVelocity(checked);
 }
 
+void PoslvControl::showAccelerationToggled(bool checked) {
+  setShowAcceleration(checked);
+}
+
 void PoslvControl::renderView(View& view) {
   if (_ui->showPathCheckBox->isChecked())
     renderPath(view, _palette.getColor("Path"));
   if (_ui->showAxesCheckBox->isChecked())
-    renderAxes(view, _palette.getColor("Axes"), 2.5);
+    renderAxes(view, _palette.getColor("Axes"), 0.5);
   if (_ui->showVelocityCheckBox->isChecked())
     renderVelocity(view, _palette.getColor("Velocity"));
+  if (_ui->showAccelerationCheckBox->isChecked())
+    renderAcceleration(view, _palette.getColor("Acceleration"));
+}
+
+void PoslvControl::messageRead(
+    const poslv::VehicleNavigationSolutionMsgConstPtr& msg) {
+  static bool firstVNS = true;
+  static double latRef;
+  static double longRef;
+  static double altRef;
+  if (firstVNS) {
+    latRef = msg->latitude;
+    longRef = msg->longitude;
+    altRef = msg->altitude;
+    firstVNS = false;
+  }
+  double x_ecef, y_ecef, z_ecef;
+  Geo::wgs84ToEcef(msg->latitude, msg->longitude, msg->altitude, x_ecef,
+    y_ecef, z_ecef);
+  double x_enu, y_enu, z_enu;
+  Geo::ecefToEnu(x_ecef, y_ecef, z_ecef, latRef, longRef, altRef, x_enu,
+    y_enu, z_enu);
+  Eigen::Vector3d orientation =
+    Eigen::Vector3d(Utils::deg2rad(-msg->heading) + M_PI / 2.0,
+    Utils::deg2rad(-msg->pitch), Utils::deg2rad(-msg->roll));
+  _linearVelocity = Eigen::Vector3d(msg->northVelocity, msg->eastVelocity,
+    msg->downVelocity);
+  _angularVelocity = Eigen::Vector3d(Utils::deg2rad(msg->angularRateLong),
+    Utils::deg2rad(msg->angularRateTrans),
+    Utils::deg2rad(msg->angularRateDown));
+  _acceleration = Eigen::Vector3d(msg->accLong, msg->accTrans, msg->accDown);
+  _T_w_i = Eigen::Translation3d(x_enu, y_enu, z_enu)
+    * Eigen::AngleAxisd(orientation(0), Eigen::Vector3d::UnitZ())
+    * Eigen::AngleAxisd(orientation(1), Eigen::Vector3d::UnitY())
+    * Eigen::AngleAxisd(orientation(2), Eigen::Vector3d::UnitX());
+  emit poseUpdate(_T_w_i);
+  static size_t updateCount = 0;
+  updateCount++;
+  if (updateCount >= _ui->rateSpinBox->value()) {
+    _path += Points<double, 3>::Point(x_enu, y_enu, z_enu);
+    emit updateViews();
+    updateCount = 0;
+  }
 }
 
 void PoslvControl::messageRead(const rosbag::MessageInstance& message) {
   if (message.isType<poslv::VehicleNavigationSolutionMsg>()) {
     poslv::VehicleNavigationSolutionMsgPtr vns(
       message.instantiate<poslv::VehicleNavigationSolutionMsg>());
-    static bool firstVNS = true;
-    static double latRef;
-    static double longRef;
-    static double altRef;
-    if (firstVNS) {
-      latRef = vns->latitude;
-      longRef = vns->longitude;
-      altRef = vns->altitude;
-      firstVNS = false;
-    }
-    double x_ecef, y_ecef, z_ecef;
-    Geo::wgs84ToEcef(vns->latitude, vns->longitude, vns->altitude, x_ecef,
-      y_ecef, z_ecef);
-    double x_enu, y_enu, z_enu;
-    Geo::ecefToEnu(x_ecef, y_ecef, z_ecef, latRef, longRef, altRef, x_enu,
-      y_enu, z_enu);
-    _path.push_back(Points<double, 3>::Point(x_enu, y_enu, z_enu));
-    _orientation = Eigen::Matrix<double, 3, 1>(-Utils::deg2rad(vns->heading),
-      Utils::deg2rad(-vns->pitch), Utils::deg2rad(-vns->roll));
-    emit poseUpdate(x_enu, y_enu, z_enu,
-      _orientation(0), _orientation(1), _orientation(2));
-    _linearVelocity = Eigen::Vector3d(vns->northVelocity, vns->eastVelocity,
-      vns->downVelocity);
-    _angularVelocity = Eigen::Vector3d(Utils::deg2rad(-vns->angularRateLong),
-      Utils::deg2rad(-vns->angularRateTrans),
-      Utils::deg2rad(-vns->angularRateDown));
-    static size_t updateCount = 0;
-    updateCount++;
-    if (updateCount == 10) {
-      emit updateViews();
-      updateCount = 0;
-    }
+    messageRead(vns);
   }
 }
 
 void PoslvControl::clearClicked() {
   _path.clear();
-  _orientation = Eigen::Vector3d::Zero();
   _linearVelocity = Eigen::Vector3d::Zero();
   _angularVelocity = Eigen::Vector3d::Zero();
+  _acceleration = Eigen::Vector3d::Zero();
+  _T_w_i = Eigen::AngleAxisd(0, Eigen::Vector3d::UnitZ())
+    * Eigen::AngleAxisd(0, Eigen::Vector3d::UnitY())
+    * Eigen::AngleAxisd(0, Eigen::Vector3d::UnitX())
+    * Eigen::Translation3d(0, 0, 0);
   emit updateViews();
 }

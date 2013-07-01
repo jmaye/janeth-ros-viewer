@@ -52,7 +52,7 @@ public:
   typedef Eigen::Matrix<double, 4, 1> Vertex;
 
   View();
-  ~View();
+  virtual ~View();
 
   QMenu& getMenu();
   const QMenu& getMenu() const;
@@ -95,6 +95,13 @@ public:
     const QColor& fromColor, const QColor& toColor) = 0;
   virtual void render(const QString& text, const QColor& color) = 0;
 
+  virtual void render(const Points<double, 3>& vertices, const QColor& color,
+    double size, bool smooth, const Transformation& transformation);
+  virtual void render(const Line<double, 3>& edges, const QColor& color,
+    const Transformation& transformation);
+  virtual void render(const QImage& image, const QRectF& target,
+    const Transformation& transformation, const std::string& serial,
+    size_t imageId) = 0;
   virtual void render(const Box<double, 3>& box, const QColor& color);
   virtual void render(const Pyramid<double, 3>& pyramid, const QColor& color);
   virtual void render(const Ellipsoid<double, 3>& ellipsoid, size_t

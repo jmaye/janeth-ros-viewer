@@ -21,22 +21,22 @@ remake_var_name(GIT_REVISION_VAR ${REMAKE_PROJECT_NAME} GIT_REVISION)
 
 remake_ros_pack_deb()
 
-#if(${ROS_DISTRIBUTION} STREQUAL fuerte)
-#  remake_ros_distribute_deb(
-#    DISTRIBUTION lucid
-#    SECTION libs
-#    DEPENDS remake pkg-config
-#    UPLOAD ppa:jmaye/ros
-#    PASS CMAKE_BUILD_TYPE ${GIT_REVISION_VAR}
-#    FORCE_CONSISTENCY
-#  )
-#endif()
+if(${ROS_DISTRIBUTION} STREQUAL fuerte)
+  remake_ros_distribute_deb(
+    DISTRIBUTION lucid
+    SECTION libs
+    DEPENDS remake pkg-config
+    UPLOAD ppa:jmaye/janeth
+    PASS CMAKE_BUILD_TYPE ${GIT_REVISION_VAR}
+    FORCE_CONSISTENCY
+  )
+endif()
 
-#remake_ros_distribute_deb(
-#  DISTRIBUTION precise
-#  SECTION libs
-#  DEPENDS remake pkg-config
-#  UPLOAD ppa:jmaye/ros
-#  PASS CMAKE_BUILD_TYPE ${GIT_REVISION_VAR}
-#  FORCE_CONSISTENCY
-#)
+remake_ros_distribute_deb(
+  DISTRIBUTION precise
+  SECTION libs
+  DEPENDS remake pkg-config
+  UPLOAD ppa:jmaye/janeth
+  PASS CMAKE_BUILD_TYPE ${GIT_REVISION_VAR}
+  FORCE_CONSISTENCY
+)

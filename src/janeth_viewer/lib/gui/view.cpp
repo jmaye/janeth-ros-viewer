@@ -259,6 +259,21 @@ void View::render(const QString& text, double x, double y, double z,
   render(text, Point(x, y, z), color, size);
 }
 
+void View::render(const Points<double, 3>& vertices, const QColor& color,
+    double size, bool smooth, const Transformation& transformation) {
+  saveTransformation();
+  setTransformation(getTransformation() * transformation);
+  render(vertices, color, size, smooth);
+  restoreTransformation();
+}
+void View::render(const Line<double, 3>& edges, const QColor& color,
+    const Transformation& transformation) {
+  saveTransformation();
+  setTransformation(getTransformation() * transformation);
+  render(edges, color);
+  restoreTransformation();
+}
+
 void View::map(Point& point) const {
   Size size = getSize();
 

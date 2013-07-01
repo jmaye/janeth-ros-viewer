@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GraphicsView</class>
+ <widget class="QWidget" name="GraphicsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>840</width>
+    <height>537</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="displayLayout">
+     <item row="0" column="0">
+      <widget class="QFrame" name="displayFrame">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="GraphicsDisplay" name="display" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="dumpLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="dumpDirTextLabel">
+       <property name="text">
+        <string>Dump directory:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="dumpDirEdit">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="dumpDirBrowseButton">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Browse...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="dumpFormatTextLabel">
+       <property name="text">
+        <string>Dump format:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLineEdit" name="dumpFormatEdit">
+       <property name="inputMask">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="5">
+      <widget class="QPushButton" name="dumpButton">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Dump</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="dumpFrameSizeTextLabel">
+       <property name="text">
+        <string>Dump frame size:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="dumpFrameSizeLayout">
+       <item>
+        <widget class="QSpinBox" name="dumpFrameWidthSpinBox">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="maximum">
+          <number>9999</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="dumpFrameHeightSpinBox">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="maximum">
+          <number>9999</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="5">
+      <widget class="QCheckBox" name="dumpAllCheckBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Dump all</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="dumpFrameTextLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Dump frame:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QSpinBox" name="dumpFrameSpinBox">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <number>99999999</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsDisplay</class>
+   <extends>QWidget</extends>
+   <header>GraphicsDisplay.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>dumpDirBrowseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GraphicsView</receiver>
+   <slot>dumpDirBrowseClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>383</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dumpButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GraphicsView</receiver>
+   <slot>dumpClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>789</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dumpAllCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>GraphicsView</receiver>
+   <slot>dumpAllToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>789</x>
+     <y>489</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>dumpDirBrowseClicked()</slot>
+  <slot>dumpClicked()</slot>
+  <slot>dumpAllToggled(bool)</slot>
+ </slots>
+</ui>

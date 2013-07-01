@@ -144,4 +144,6 @@ void BagControl::timerTimeout() {
       (double)_msgCnt / (double)_view->size());
     _timer.start(0);
   }
+  else
+    _timer.stop();
 }

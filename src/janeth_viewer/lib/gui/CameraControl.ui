@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VelodyneControl</class>
- <widget class="QWidget" name="VelodyneControl">
+ <class>CameraControl</class>
+ <widget class="QWidget" name="CameraControl">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,69 +15,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="pointSizeLayout">
-     <item>
-      <widget class="QLabel" name="pointSizeTextLabel">
-       <property name="text">
-        <string>Point size:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="pointSizeSpinBox">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="decimals">
-        <number>2</number>
-       </property>
-       <property name="maximum">
-        <double>100.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="smoothPointsCheckBox">
-       <property name="text">
-        <string>Smooth</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="ColorChooser" name="colorChooser" native="true"/>
    </item>
    <item>
@@ -90,9 +27,9 @@
    <item>
     <layout class="QGridLayout" name="showLayout">
      <item row="0" column="0">
-      <widget class="QCheckBox" name="showPointsCheckBox">
+      <widget class="QCheckBox" name="showImageCheckBox">
        <property name="text">
-        <string>Show points</string>
+        <string>Show image</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -100,13 +37,6 @@
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QPushButton" name="clearButton">
-       <property name="text">
-        <string>Clear</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -120,21 +50,21 @@
       </spacer>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="revolutionLabel">
+      <widget class="QLabel" name="ratelabel">
        <property name="text">
-        <string>Revolutions displayed:</string>
+        <string>Rendering rate:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QSpinBox" name="revolutionSpinBox">
+      <widget class="QSpinBox" name="rateSpinBox">
        <property name="value">
         <number>10</number>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <spacer name="horizontalSpacer_9">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -145,89 +75,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QGridLayout" name="configLayout">
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="calibrationEdit">
-       <property name="text">
-        <string>/etc/libvelodyne/calib-HDL-64E.dat</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="calibrationTextLabel">
-       <property name="text">
-        <string>Calibration file:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="calibrationBrowseButton">
-       <property name="text">
-        <string>Open...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="rangeSupportTextLabel">
-       <property name="text">
-        <string>Range support:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QDoubleSpinBox" name="minRangeSpinBox">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="maximum">
-        <double>120.000000000000000</double>
-       </property>
-       <property name="singleStep">
-        <double>0.010000000000000</double>
-       </property>
-       <property name="value">
-        <double>1.500000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QDoubleSpinBox" name="maxRangeSpinBox">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="maximum">
-        <double>120.000000000000000</double>
-       </property>
-       <property name="singleStep">
-        <double>0.010000000000000</double>
-       </property>
-       <property name="value">
-        <double>120.000000000000000</double>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -283,7 +130,7 @@
         <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <double>1.059000000000000</double>
+        <double>1.635000000000000</double>
        </property>
       </widget>
      </item>
@@ -412,6 +259,9 @@
        <property name="singleStep">
         <double>0.100000000000000</double>
        </property>
+       <property name="value">
+        <double>-1.570793000000000</double>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
@@ -525,121 +375,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>calibrationBrowseButton</sender>
-   <signal>clicked()</signal>
-   <receiver>VelodyneControl</receiver>
-   <slot>calibrationBrowseClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>356</x>
-     <y>16</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pointSizeSpinBox</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
-   <slot>pointSizeChanged(double)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>344</x>
-     <y>17</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>smoothPointsCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>VelodyneControl</receiver>
-   <slot>smoothPointsToggled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>minRangeSpinBox</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
-   <slot>rangeSupportChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>240</x>
-     <y>224</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>maxRangeSpinBox</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
-   <slot>rangeSupportChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>344</x>
-     <y>224</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>showPointsCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>VelodyneControl</receiver>
-   <slot>showPointsToggled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>75</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>193</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clearButton</sender>
-   <signal>clicked()</signal>
-   <receiver>VelodyneControl</receiver>
-   <slot>clearClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>296</x>
-     <y>92</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>245</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>showAxesCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>VelodyneControl</receiver>
+   <receiver>CameraControl</receiver>
    <slot>showAxesToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -655,7 +393,7 @@
   <connection>
    <sender>txSpinBox</sender>
    <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
+   <receiver>CameraControl</receiver>
    <slot>transformationChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -671,7 +409,7 @@
   <connection>
    <sender>tySpinBox</sender>
    <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
+   <receiver>CameraControl</receiver>
    <slot>transformationChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -687,7 +425,7 @@
   <connection>
    <sender>tzSpinBox</sender>
    <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
+   <receiver>CameraControl</receiver>
    <slot>transformationChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -703,7 +441,7 @@
   <connection>
    <sender>rxSpinBox</sender>
    <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
+   <receiver>CameraControl</receiver>
    <slot>transformationChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -719,7 +457,7 @@
   <connection>
    <sender>rySpinBox</sender>
    <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
+   <receiver>CameraControl</receiver>
    <slot>transformationChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -735,7 +473,7 @@
   <connection>
    <sender>rzSpinBox</sender>
    <signal>valueChanged(double)</signal>
-   <receiver>VelodyneControl</receiver>
+   <receiver>CameraControl</receiver>
    <slot>transformationChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -748,14 +486,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>showImageCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CameraControl</receiver>
+   <slot>showImageToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>calibrationBrowseClicked()</slot>
-  <slot>pointSizeChanged(double)</slot>
-  <slot>smoothPointsToggled(bool)</slot>
-  <slot>rangeSupportChanged()</slot>
-  <slot>showPointsToggled(bool)</slot>
-  <slot>clearClicked()</slot>
+  <slot>showImageToggled(bool)</slot>
   <slot>showAxesToggled(bool)</slot>
   <slot>transformationChanged()</slot>
  </slots>

@@ -60,8 +60,8 @@ SceneControl::SceneControl(bool showFog, bool showGround, bool showAxes) :
   connect<View>(SIGNAL(render(View&)), SLOT(renderView(View&)));
 
   connect<PoslvControl>(
-    SIGNAL(poseUpdate(double, double, double, double, double, double)),
-    SLOT(poseUpdate(double, double, double, double, double, double)));
+    SIGNAL(poseUpdate(const Eigen::Affine3d&)),
+    SLOT(poseUpdate(const Eigen::Affine3d&)));
 
   camera.setPosition(-20.0, 0.0, 0.0);
   camera.setViewpoint(0.0, 0.0, 0.0);
@@ -224,7 +224,7 @@ void SceneControl::renderAxes(View& view, const QColor& color, double length) {
   view.render("Y", 0.0, length, 0.0, color, 0.2*length);
   view.render("Z", 0.0, 0.0, length, color, 0.2*length);
 
-  view.render("world", 0.0, 0.0, length + 0.5, color, 0.2 * length);
+  view.render("world", 0.0, 0.0, length + 0.1, color, 0.2 * length);
 }
 
 void SceneControl::groundRadiusChanged(double radius) {
@@ -437,14 +437,12 @@ void SceneControl::renderView(View& view) {
     renderGround(view, palette.getColor("Ground"), radius,
       ui->groundZSpinBox->value(), 30.0*M_PI/180.0, 5.0);
   if (ui->showAxesCheckBox->isChecked())
-    renderAxes(view, palette.getColor("Axes"), 2.5);
+    renderAxes(view, palette.getColor("Axes"), 0.5);
 }
 
-void SceneControl::poseUpdate(double x, double y, double z, double yaw,
-    double pitch, double roll) {
+void SceneControl::poseUpdate(const Eigen::Affine3d& T_w_i) {
   if (ui->cameraFollowCheckBox->isChecked()) {
-    scene.setTranslation(-x, -y, -z);
-//    scene.setRotation();
+    scene.setTranslation(-T_w_i.translation());
   }
   if (ui->rotateFramesCheckBox->isChecked()) {
     scene.setRotation((ui->sceneYawSpinBox->value()+

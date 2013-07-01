@@ -25,10 +25,7 @@
 
 #include <eigen3/Eigen/Dense>
 
-#include "utils/geometry.h"
-
-template <typename T, size_t K> class Points:
-  public Geometry<T, K> {
+template <typename T, size_t K> class Points {
 public:
   typedef Eigen::Matrix<T, K, 1> Point;
 
@@ -40,6 +37,8 @@ public:
   inline size_t getNumPoints() const;
   inline std::vector<Point> getPoints();
   inline const std::vector<Point> getPoints() const;
+
+  inline void clear();
 
   inline Point& operator[](int i);
   inline const Point& operator[](int i) const;

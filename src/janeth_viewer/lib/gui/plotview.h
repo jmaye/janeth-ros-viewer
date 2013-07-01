@@ -75,6 +75,9 @@ public:
   void enableFog(const QColor& color, double start, double end,
     double density);
 
+  void render(const QImage& image, const QRectF& target,
+    const Transformation& transformation, const std::string& serial,
+    size_t imageId);
   void render(const Points<double, 3>& vertices, const QColor& color,
     double size, bool smooth);
   void render(const Points<double, 3>& vertices, const std::vector<double>&
