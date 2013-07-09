@@ -137,15 +137,13 @@ void PoslvControl::renderVelocity(View& view, const QColor& color) {
   if (_path.getNumPoints()) {
     Line<double, 3> linearVelocity;
     Line<double, 3> angularVelocity;
-    const Eigen::Matrix3d C_ENU_NED =
-      Geo::R_ENU_NED::getInstance().getMatrix();
     Eigen::Affine3d translation;
     translation = Eigen::Translation3d(_T_w_i.translation());
-    linearVelocity[1] = C_ENU_NED * _linearVelocity;
+    linearVelocity[1] = _linearVelocity;
     view.render(linearVelocity, color, translation);
     Eigen::Vector3d labelPosition = translation * linearVelocity[1];
     view.render("v", labelPosition, color, 0.05 * 2.5);
-    angularVelocity[1] = C_ENU_NED * _angularVelocity;
+    angularVelocity[1] = _T_w_i.rotation() * _angularVelocity;
     view.render(angularVelocity, color, _T_w_i);
     view.render("om", _T_w_i * angularVelocity[1], color, 0.2 * 0.5);
   }
@@ -154,9 +152,7 @@ void PoslvControl::renderVelocity(View& view, const QColor& color) {
 void PoslvControl::renderAcceleration(View& view, const QColor& color) {
   if (_path.getNumPoints()) {
     Line<double, 3> acceleration;
-    const Eigen::Matrix3d C_ENU_NED =
-      Geo::R_ENU_NED::getInstance().getMatrix();
-    acceleration[1] = C_ENU_NED * _acceleration;
+    acceleration[1] = _T_w_i.rotation() * _acceleration;
     view.render(acceleration, color, _T_w_i);
     view.render("a", _T_w_i * acceleration[1], color, 0.2 * 0.5);
   }
@@ -214,12 +210,12 @@ void PoslvControl::messageRead(
   Eigen::Vector3d orientation =
     Eigen::Vector3d(Utils::deg2rad(-msg->heading) + M_PI / 2.0,
     Utils::deg2rad(-msg->pitch), Utils::deg2rad(-msg->roll));
-  _linearVelocity = Eigen::Vector3d(msg->northVelocity, msg->eastVelocity,
-    msg->downVelocity);
+  _linearVelocity = Geo::R_ENU_NED::getInstance().getMatrix() *
+    Eigen::Vector3d(msg->northVelocity, msg->eastVelocity, msg->downVelocity);
   _angularVelocity = Eigen::Vector3d(Utils::deg2rad(msg->angularRateLong),
-    Utils::deg2rad(msg->angularRateTrans),
-    Utils::deg2rad(msg->angularRateDown));
-  _acceleration = Eigen::Vector3d(msg->accLong, msg->accTrans, msg->accDown);
+    Utils::deg2rad(-msg->angularRateTrans),
+    Utils::deg2rad(-msg->angularRateDown));
+  _acceleration = Eigen::Vector3d(msg->accLong, -msg->accTrans, -msg->accDown);
   _T_w_i = Eigen::Translation3d(x_enu, y_enu, z_enu)
     * Eigen::AngleAxisd(orientation(0), Eigen::Vector3d::UnitZ())
     * Eigen::AngleAxisd(orientation(1), Eigen::Vector3d::UnitY())

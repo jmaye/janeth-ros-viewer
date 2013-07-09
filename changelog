@@ -1,3 +1,9 @@
+janeth-ros-viewer (0.1-9) lucid; urgency=low
+
+  * changed poslv velocities
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Tue, 09 Jul 2013 14:48:25 +0200
+
 janeth-ros-viewer (0.1-8) lucid; urgency=low
 
   * changelog screwed
