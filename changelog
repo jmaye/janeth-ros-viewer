@@ -1,3 +1,9 @@
+janeth-ros-viewer (0.1-11) precise; urgency=low
+
+  * negating the roll 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Wed, 07 Aug 2013 14:48:30 +0000
+
 janeth-ros-viewer (0.1-10) precise; urgency=low
 
   * update version 

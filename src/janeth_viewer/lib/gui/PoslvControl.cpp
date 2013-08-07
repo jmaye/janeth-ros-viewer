@@ -209,7 +209,7 @@ void PoslvControl::messageRead(
     y_enu, z_enu);
   Eigen::Vector3d orientation =
     Eigen::Vector3d(Utils::deg2rad(-msg->heading) + M_PI / 2.0,
-    Utils::deg2rad(-msg->pitch), Utils::deg2rad(-msg->roll));
+    Utils::deg2rad(-msg->pitch), Utils::deg2rad(msg->roll));
   _linearVelocity = Geo::R_ENU_NED::getInstance().getMatrix() *
     Eigen::Vector3d(msg->northVelocity, msg->eastVelocity, msg->downVelocity);
   _angularVelocity = Eigen::Vector3d(Utils::deg2rad(msg->angularRateLong),
